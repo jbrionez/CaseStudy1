@@ -1,0 +1,22 @@
+---
+title: "CaseStudy1"
+author: "Jacob Brionez"
+date: "October 27, 2016"
+output: 
+  html_document:
+    keep_md: true
+---
+
+# Download and save data from websites
+
+```{r}
+library(repmis)
+urladdress <-"http://data.worldbank.org/data-catalog/GDP-ranking-table"
+urladdress2 <-"http://data.worldbank.org/data-catalog/ed-stats"
+GDP <- repmis::source_data(urladdress)
+EDU <- repmis::source_data(urladdress2)
+names(GDP)
+str(GDP)
+names(EDU)
+str(EDU)
+```
