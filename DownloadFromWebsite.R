@@ -23,6 +23,7 @@ EDU <- source_data(urladdress, sep=",", header=TRUE)
 
 #Merge of Datasets GDPFinal and EDU
 GDPEDUdata <- merge(x=GDPFinal, y=EDU, by = "CountryCode", all=TRUE) #Merge of data by CountryCode
+EDU <- source_data(urladdress, sep=",", header=TRUE)
 
 ##Question 1
 #Merge the data based on the country shortcode. How many of the IDs match?
@@ -78,9 +79,13 @@ g
 #How many countries are Lower middle income but among the 38 nations with highest
 #GDP?
 
-quantile(GDPEDUdataRank$MUSD)
-brks <- with(GDPEDUdataRank, quantile(MUSD, probs = c(0, 0.20, 0.40, 0.60, 0.8, 1)))
-GDPEDUdataRankQant <- within(GDPEDUdataRank, quantile <- cut(MUSD, breaks = brks, labels = 1:5, include.lowest = TRUE))
+##Additional Info - Exploration
+#quantile(GDPEDUdataRank$MUSD)
+#brks <- with(GDPEDUdataRank, quantile(MUSD, probs = c(0, 0.20, 0.40, 0.60, 0.8, 1)))
+#GDPEDUdataRankQant <- within(GDPEDUdataRank, quantile <- cut(MUSD, breaks = brks, labels = 1:5, include.lowest = TRUE))
+
+brks2 <- with(GDPEDUdataRank, quantile(Ranking, probs = c(0, 0.20, 0.40, 0.60, 0.8, 1)))
+GDPEDUdataRankQantRnk <- within(GDPEDUdataRank, quantile <- cut(Ranking, breaks = brks2, labels = 1:5, include.lowest = TRUE))
 
 #plot
 g<-g+ggtitle("GDP")
