@@ -10,7 +10,6 @@ output:
 ##Installed Packages
 ```{r}
 library(ggplot2)
-library(extrafont)
 library(repmis)
 library(RCurl)
 ```
@@ -36,7 +35,6 @@ EDU <- source_data(urladdress, sep=",", header=TRUE)
 #Merge of Datasets GDPFinal and EDU
 ```{r}
 GDPEDUdata <- merge(x=GDPFinal, y=EDU, by = "CountryCode", all=TRUE) #Merge of data by CountryCode
-GDPEDUdataRank <- subset(x=GDPEDUdata!is.na(GDPEDUdata))
 ```
 ##Question 1
 #Merge the data based on the country shortcode. How many of the IDs match?
@@ -44,7 +42,7 @@ GDPEDUdataRank <- subset(x=GDPEDUdata!is.na(GDPEDUdata))
 #for countries that had GDP data available and that had Education Data entered.
 ```{r}
 GDPEDUdataRank <- subset(x=GDPEDUdata, Ranking > 0) #Remove non matched data
-GDPEDUdataRank <- arrange(GDPEDUdataRank, Ranking)
+GDPEDUdataRank <- dplyr::arrange(GDPEDUdataRank, Ranking)
 GDPEDUdataRank[c(1:2)]
 ```
 ##Question 2
@@ -79,11 +77,10 @@ summary(HighIncomenonOECD)
 
 ##Question 4
 #Plot the GDP for all of the countries. Use ggplot2 to color your plot by Income Group.
-
+#g<-g+ggtitle("GDP")
+#g+theme(plot.title = element_text(size=20, face="bold", vjust=1, lineheight=0.6))
+#g+theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))
 ```{r}
-g<-g+ggtitle("GDP")
-g+theme(plot.title = element_text(size=20, face="bold", vjust=1, lineheight=0.6))
-g+theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))
 g<-ggplot(GDPEDUdataRank, aes(Ranking, MUSD, color=factor(`Income Group`)))+geom_point()
 g
 ```
@@ -107,11 +104,11 @@ table(GDPEDUdataRankQantRnk$quantile, GDPEDUdataRankQantRnk$`Income Group`, excl
 ```
 
 #Separating out the Lower middle income group for comparison to ranking of Top 38 GDP Countries
-```{r}
-LowerMiddleIncome <- subset(GDPEDUdataRankQant, `Income Group` == "Lower middle income") #create subset for Lower Middle Income
-LowerMiddleIncomeTop38GDP <- subset(LowerMiddleIncome, Ranking <= 38) #create additional subset with top 38 GDPs
-LowerMiddleIncomeTop38GDP[c(1:2)] #list of GDPs with both that are both in the lower Middle income group and in top 38 GDPs
-```
+#```{r}
+#LowerMiddleIncome <- subset(GDPEDUdataRankQant, `Income Group` == "Lower middle income") #create subset for Lower Middle Income
+#LowerMiddleIncomeTop38GDP <- subset(LowerMiddleIncome, Ranking <= 38) #create additional subset with top 38 GDPs
+#LowerMiddleIncomeTop38GDP[c(1:2)] #list of GDPs with both that are both in the lower Middle income group and in top 38 GDPs
+#```
 #Five countries are in the lower middle income group that are in the top 38 GDP.
 #CHN (2)
 #IND (10)
