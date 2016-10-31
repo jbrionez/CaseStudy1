@@ -1,6 +1,5 @@
 ##Installed Packages
 library(ggplot2)
-library(extrafont)
 library(repmis)
 library(RCurl)
 
@@ -23,7 +22,7 @@ EDU <- source_data(urladdress, sep=",", header=TRUE)
 
 #Merge of Datasets GDPFinal and EDU
 GDPEDUdata <- merge(x=GDPFinal, y=EDU, by = "CountryCode", all=TRUE) #Merge of data by CountryCode
-EDU <- source_data(urladdress, sep=",", header=TRUE)
+
 
 ##Question 1
 #Merge the data based on the country shortcode. How many of the IDs match?

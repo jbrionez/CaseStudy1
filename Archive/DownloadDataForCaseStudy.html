@@ -132,13 +132,13 @@ $(document).ready(function () {
 <p>The World Bank is a vital source of financial and technical assistance to developing countries around the world. The World Bank Group comprises five institutions managed by their member countries. Established in 1944, the World Bank Group is headquartered in Washington, D.C. We have more than 10,000 employees in more than 120 offices worldwide.</p>
 <p>The World Bank also provides free and open access to global development data that it collects on their website at data.worldbank.org. This analysis will utilize this data to provide insight into countries of various GDP levels and the income levels of the people who live in those countries.</p>
 <p>We are utilizing the following queried data sets in our analysis: Education Statistics - The World Bank EdStats All Indicator Query GDP Ranking - Gross domestic product ranking table</p>
-<div id="installed-packages" class="section level2">
-<h2>Installed Packages</h2>
+</div>
+<div id="installed-packages" class="section level1">
+<h1>Installed Packages</h1>
 <pre class="r"><code>library(ggplot2)
 library(repmis)
 library(RCurl)</code></pre>
 <pre><code>## Loading required package: bitops</code></pre>
-</div>
 </div>
 <div id="downloading-url-and-clean-up-prep-for-merge" class="section level1">
 <h1>Downloading URL and clean up prep for Merge</h1>
@@ -168,7 +168,6 @@ GDPFinal &lt;- subset(x=GDPFinal, Ranking != &quot;a. Includes Former Spanish Sa
 GDPFinal &lt;- subset(x=GDPFinal, Ranking != &quot;controlled by the government of the Republic of Cyprus.   e. Excludes Abkhazia and South Ossetia.  f. Excludes Transnistria.&quot;)
 GDPFinal &lt;- subset(x=GDPFinal, Ranking &gt;0) #Removes Outliers Items with no MUSD or that are not countries
 
-
 urladdress &lt;-&quot;https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv&quot;
 EDU &lt;- source_data(urladdress, sep=&quot;,&quot;, header=TRUE)</code></pre>
 <pre><code>## Downloading data from: https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv</code></pre>
@@ -178,426 +177,27 @@ EDU &lt;- source_data(urladdress, sep=&quot;,&quot;, header=TRUE)</code></pre>
 <div id="merge-of-datasets-gdpfinal-and-edu" class="section level1">
 <h1>Merge of Datasets GDPFinal and EDU</h1>
 <pre class="r"><code>GDPEDUdata &lt;- merge(x=GDPFinal, y=EDU, by = &quot;CountryCode&quot;, all=TRUE) #Merge of data by CountryCode</code></pre>
-<div id="question-1" class="section level2">
-<h2>Question 1</h2>
 </div>
-</div>
-<div id="merge-the-data-based-on-the-country-shortcode.-how-many-of-the-ids-match" class="section level1">
-<h1>Merge the data based on the country shortcode. How many of the IDs match?</h1>
-</div>
-<div id="based-on-the-merge-of-the-country-education-data-and-the-gross-domestic-product-data-there-were-190-matches" class="section level1">
-<h1>Based on the Merge of the Country Education Data and the Gross Domestic Product Data, there were 190 matches</h1>
-</div>
-<div id="for-countries-that-had-gdp-data-available-and-that-had-education-data-entered." class="section level1">
-<h1>for countries that had GDP data available and that had Education Data entered.</h1>
+<div id="question-1" class="section level1">
+<h1>Question 1</h1>
+<p>Merge the data based on the country shortcode. How many of the IDs match? Based on the Merge of the Country Education Data and the Gross Domestic Product Data, there were 190 matches for countries that had GDP data available and that had Education Data entered.</p>
 <pre class="r"><code>GDPEDUdataRank &lt;- subset(x=GDPEDUdata, Ranking &gt; 0) #Remove non matched data
 GDPEDUdataRank &lt;- dplyr::arrange(GDPEDUdataRank, Ranking)
-GDPEDUdataRank[c(1:2)]</code></pre>
-<pre><code>##     CountryCode Ranking
-## 1           USA       1
-## 2           IND      10
-## 3           SLV     100
-## 4           TTO     101
-## 5           CYP     102
-## 6           EST     103
-## 7           ZMB     104
-## 8           AFG     105
-## 9           UGA     106
-## 10          NPL     107
-## 11          HND     108
-## 12          GAB     109
-## 13          CAN      11
-## 14          GNQ     110
-## 15          BIH     111
-## 16          ZAR     112
-## 17          BRN     113
-## 18          GEO     114
-## 19          PNG     115
-## 20          JAM     116
-## 21          BWA     117
-## 22          MOZ     118
-## 23          SEN     119
-## 24          AUS      12
-## 25          KHM     120
-## 26          COG     121
-## 27          ISL     122
-## 28          NAM     123
-## 29          TCD     124
-## 30          ALB     125
-## 31          NIC     126
-## 32          MUS     127
-## 33          BFA     128
-## 34          MLI     129
-## 35          ESP      13
-## 36          MNG     130
-## 37          SSD     131
-## 38          MDG     132
-## 39          ARM     133
-## 40          ZWE     134
-## 41          MKD     135
-## 42          LAO     136
-## 43          MLT     137
-## 44          BHS     138
-## 45          HTI     139
-## 46          MEX      14
-## 47          BEN     140
-## 48          MDA     141
-## 49          RWA     142
-## 50          TJK     143
-## 51          NER     144
-## 52          KGZ     145
-## 53          KSV     146
-## 54          MCO     147
-## 55          GIN     148
-## 56          BMU     149
-## 57          KOR      15
-## 58          SUR     150
-## 59          MNE     151
-## 60          MWI     152
-## 61          BRB     153
-## 62          MRT     154
-## 63          FJI     155
-## 64          TGO     156
-## 65          SLE     157
-## 66          SWZ     158
-## 67          ERI     159
-## 68          IDN      16
-## 69          GUY     160
-## 70          ABW     161
-## 71          BDI     162
-## 72          LSO     163
-## 73          MDV     164
-## 74          CAF     165
-## 75          CPV     166
-## 76          BTN     167
-## 77          LBR     168
-## 78          BLZ     169
-## 79          TUR      17
-## 80          TMP     170
-## 81          LCA     171
-## 82          ATG     172
-## 83          SYC     173
-## 84          SLB     174
-## 85          GMB     175
-## 86          GNB     176
-## 87          VUT     177
-## 88          GRD     178
-## 89          KNA     178
-## 90          NLD      18
-## 91          VCT     180
-## 92          WSM     181
-## 93          COM     182
-## 94          DMA     183
-## 95          TON     184
-## 96          FSM     185
-## 97          STP     186
-## 98          PLW     187
-## 99          MHL     188
-## 100         KIR     189
-## 101         SAU      19
-## 102         TUV     190
-## 103         CHN       2
-## 104         CHE      20
-## 105         SWE      21
-## 106         IRN      22
-## 107         NOR      23
-## 108         POL      24
-## 109         BEL      25
-## 110         ARG      26
-## 111         AUT      27
-## 112         ZAF      28
-## 113         VEN      29
-## 114         JPN       3
-## 115         COL      30
-## 116         THA      31
-## 117         ARE      32
-## 118         DNK      33
-## 119         MYS      34
-## 120         SGP      35
-## 121         CHL      36
-## 122         HKG      37
-## 123         EGY      38
-## 124         NGA      39
-## 125         DEU       4
-## 126         ISR      40
-## 127         PHL      41
-## 128         GRC      42
-## 129         FIN      43
-## 130         PAK      44
-## 131         PRT      45
-## 132         IRL      46
-## 133         IRQ      47
-## 134         DZA      48
-## 135         PER      49
-## 136         FRA       5
-## 137         KAZ      50
-## 138         CZE      51
-## 139         ROM      52
-## 140         UKR      53
-## 141         QAT      54
-## 142         NZL      55
-## 143         KWT      56
-## 144         VNM      57
-## 145         HUN      58
-## 146         BGD      59
-## 147         GBR       6
-## 148         AGO      60
-## 149         PRI      61
-## 150         MAR      62
-## 151         SVK      63
-## 152         ECU      64
-## 153         SYR      65
-## 154         OMN      66
-## 155         CUB      67
-## 156         AZE      68
-## 157         BLR      69
-## 158         BRA       7
-## 159         LKA      70
-## 160         HRV      71
-## 161         DOM      72
-## 162         SDN      73
-## 163         LUX      74
-## 164         UZB      75
-## 165         BGR      76
-## 166         GTM      77
-## 167         URY      78
-## 168         TUN      79
-## 169         RUS       8
-## 170         SVN      80
-## 171         CRI      81
-## 172         MAC      82
-## 173         LBN      83
-## 174         LTU      84
-## 175         ETH      85
-## 176         GHA      86
-## 177         KEN      87
-## 178         SRB      88
-## 179         PAN      89
-## 180         ITA       9
-## 181         YEM      90
-## 182         TKM      91
-## 183         JOR      92
-## 184         BHR      93
-## 185         LVA      94
-## 186         TZA      95
-## 187         BOL      96
-## 188         PRY      97
-## 189         CMR      98
-## 190         CIV      99</code></pre>
-<div id="question-2" class="section level2">
-<h2>Question 2</h2>
+#GDPEDUdataRank[c(1:2)]</code></pre>
 </div>
-</div>
-<div id="sort-the-data-frame-in-ascending-order-by-gdp-so-united-states-is-last.-what-is-the-13th" class="section level1">
-<h1>Sort the data frame in ascending order by GDP (so United States is last). What is the 13th</h1>
-</div>
-<div id="country-in-the-resulting-data-frame" class="section level1">
-<h1>country in the resulting data frame?</h1>
+<div id="question-2" class="section level1">
+<h1>Question 2</h1>
+<p>Sort the data frame in ascending order by GDP (so United States is last). What is the 13th country in the resulting data frame?</p>
 <pre class="r"><code>GDPEDUdataRank$MUSD&lt;-as.numeric(gsub(&quot;\\,&quot;,&quot;&quot;,GDPEDUdataRank$MUSD)) #remove commas and change to numeric
 GDPEDUdataRank$MUSD&lt;-as.numeric(gsub(&quot;\\$&quot;,&quot;&quot;,GDPEDUdataRank$MUSD)) #remove Dollar signs and change to numeric
 GDPEDUdataRank$Ranking&lt;-as.numeric(GDPEDUdataRank$Ranking) #convert Rankings to Numeric
 GDPEDUdataRank &lt;- dplyr::arrange(GDPEDUdataRank, MUSD) #
-GDPEDUdataRank[c(1:2)]</code></pre>
-<pre><code>##     CountryCode Ranking
-## 1           TUV     190
-## 2           KIR     189
-## 3           MHL     188
-## 4           PLW     187
-## 5           STP     186
-## 6           FSM     185
-## 7           TON     184
-## 8           DMA     183
-## 9           COM     182
-## 10          WSM     181
-## 11          VCT     180
-## 12          GRD     178
-## 13          KNA     178
-## 14          VUT     177
-## 15          GNB     176
-## 16          GMB     175
-## 17          SLB     174
-## 18          SYC     173
-## 19          ATG     172
-## 20          LCA     171
-## 21          TMP     170
-## 22          BLZ     169
-## 23          LBR     168
-## 24          BTN     167
-## 25          CPV     166
-## 26          CAF     165
-## 27          MDV     164
-## 28          LSO     163
-## 29          BDI     162
-## 30          ABW     161
-## 31          GUY     160
-## 32          ERI     159
-## 33          SWZ     158
-## 34          SLE     157
-## 35          TGO     156
-## 36          FJI     155
-## 37          MRT     154
-## 38          BRB     153
-## 39          MWI     152
-## 40          MNE     151
-## 41          SUR     150
-## 42          BMU     149
-## 43          GIN     148
-## 44          MCO     147
-## 45          KSV     146
-## 46          KGZ     145
-## 47          NER     144
-## 48          TJK     143
-## 49          RWA     142
-## 50          MDA     141
-## 51          BEN     140
-## 52          HTI     139
-## 53          BHS     138
-## 54          MLT     137
-## 55          LAO     136
-## 56          MKD     135
-## 57          ZWE     134
-## 58          ARM     133
-## 59          MDG     132
-## 60          SSD     131
-## 61          MNG     130
-## 62          MLI     129
-## 63          BFA     128
-## 64          MUS     127
-## 65          NIC     126
-## 66          ALB     125
-## 67          TCD     124
-## 68          NAM     123
-## 69          ISL     122
-## 70          COG     121
-## 71          KHM     120
-## 72          SEN     119
-## 73          MOZ     118
-## 74          BWA     117
-## 75          JAM     116
-## 76          PNG     115
-## 77          GEO     114
-## 78          BRN     113
-## 79          ZAR     112
-## 80          BIH     111
-## 81          GNQ     110
-## 82          GAB     109
-## 83          HND     108
-## 84          NPL     107
-## 85          UGA     106
-## 86          AFG     105
-## 87          ZMB     104
-## 88          EST     103
-## 89          CYP     102
-## 90          TTO     101
-## 91          SLV     100
-## 92          CIV      99
-## 93          CMR      98
-## 94          PRY      97
-## 95          BOL      96
-## 96          TZA      95
-## 97          LVA      94
-## 98          BHR      93
-## 99          JOR      92
-## 100         TKM      91
-## 101         YEM      90
-## 102         PAN      89
-## 103         SRB      88
-## 104         KEN      87
-## 105         GHA      86
-## 106         ETH      85
-## 107         LTU      84
-## 108         LBN      83
-## 109         MAC      82
-## 110         CRI      81
-## 111         SVN      80
-## 112         TUN      79
-## 113         URY      78
-## 114         GTM      77
-## 115         BGR      76
-## 116         UZB      75
-## 117         LUX      74
-## 118         SDN      73
-## 119         DOM      72
-## 120         HRV      71
-## 121         LKA      70
-## 122         BLR      69
-## 123         AZE      68
-## 124         CUB      67
-## 125         OMN      66
-## 126         SYR      65
-## 127         ECU      64
-## 128         SVK      63
-## 129         MAR      62
-## 130         PRI      61
-## 131         AGO      60
-## 132         BGD      59
-## 133         HUN      58
-## 134         VNM      57
-## 135         KWT      56
-## 136         NZL      55
-## 137         QAT      54
-## 138         UKR      53
-## 139         ROM      52
-## 140         CZE      51
-## 141         KAZ      50
-## 142         PER      49
-## 143         DZA      48
-## 144         IRQ      47
-## 145         IRL      46
-## 146         PRT      45
-## 147         PAK      44
-## 148         FIN      43
-## 149         GRC      42
-## 150         PHL      41
-## 151         ISR      40
-## 152         NGA      39
-## 153         EGY      38
-## 154         HKG      37
-## 155         CHL      36
-## 156         SGP      35
-## 157         MYS      34
-## 158         DNK      33
-## 159         ARE      32
-## 160         THA      31
-## 161         COL      30
-## 162         VEN      29
-## 163         ZAF      28
-## 164         AUT      27
-## 165         ARG      26
-## 166         BEL      25
-## 167         POL      24
-## 168         NOR      23
-## 169         IRN      22
-## 170         SWE      21
-## 171         CHE      20
-## 172         SAU      19
-## 173         NLD      18
-## 174         TUR      17
-## 175         IDN      16
-## 176         KOR      15
-## 177         MEX      14
-## 178         ESP      13
-## 179         AUS      12
-## 180         CAN      11
-## 181         IND      10
-## 182         ITA       9
-## 183         RUS       8
-## 184         BRA       7
-## 185         GBR       6
-## 186         FRA       5
-## 187         DEU       4
-## 188         JPN       3
-## 189         CHN       2
-## 190         USA       1</code></pre>
+#GDPEDUdataRank[c(1:2)]</code></pre>
+<p>KNA is the Thirteenth country on the list.</p>
 </div>
-<div id="kna-is-the-thirteenth-country-on-the-list." class="section level1">
-<h1>KNA is the Thirteenth country on the list.</h1>
-<div id="question-3" class="section level2">
-<h2>Question 3</h2>
-</div>
-</div>
-<div id="what-are-the-average-gdp-rankings-for-the-high-income-oecd-and-high-incomenonoecd-groups" class="section level1">
-<h1>What are the average GDP rankings for the “High income: OECD” and “High income:nonOECD” groups?</h1>
+<div id="question-3" class="section level1">
+<h1>Question 3</h1>
+<p>What are the average GDP rankings for the “High income: OECD” and “High income:nonOECD” groups?</p>
 <pre class="r"><code>HighIncomeOECD &lt;- subset(GDPEDUdataRank, `Income Group` == &quot;High income: OECD&quot;)
 HighIncomeOECD$Ranking&lt;-as.numeric(HighIncomeOECD$Ranking) #convert Rankings to Numeric
 HighIncomeOECD[c(1,6)] #CheckValues in Income Group Column</code></pre>
@@ -753,9 +353,7 @@ HighIncomeOECD[c(1,6)] #CheckValues in Income Group Column</code></pre>
 ##                    
 ##                    
 ## </code></pre>
-</div>
-<div id="average-ranking-is-32.97" class="section level1">
-<h1>Average Ranking is 32.97</h1>
+<p>Average Ranking is 32.97</p>
 <pre class="r"><code>HighIncomenonOECD &lt;- subset(GDPEDUdataRank, `Income Group` == &quot;High income: nonOECD&quot;)
 HighIncomenonOECD$Ranking&lt;-as.numeric(HighIncomenonOECD$Ranking) #convert Rankings to Numeric
 HighIncomenonOECD[c(1,6)] #CheckValues in Income Group Column</code></pre>
@@ -904,53 +502,35 @@ HighIncomenonOECD[c(1,6)] #CheckValues in Income Group Column</code></pre>
 ##                    
 ##                    
 ## </code></pre>
+<p>Average Ranking is 91.91</p>
 </div>
-<div id="average-ranking-is-91.91" class="section level1">
-<h1>Average Ranking is 91.91</h1>
-<div id="question-4" class="section level2">
-<h2>Question 4</h2>
-</div>
-</div>
-<div id="plot-the-gdp-for-all-of-the-countries.-use-ggplot2-to-color-your-plot-by-income-group." class="section level1">
-<h1>Plot the GDP for all of the countries. Use ggplot2 to color your plot by Income Group.</h1>
-</div>
-<div id="g-gggtitlegdp" class="section level1">
-<h1>g&lt;-g+ggtitle(“GDP”)</h1>
-</div>
-<div id="gthemeplot.title-element_textsize20-facebold-vjust1-lineheight0.6" class="section level1">
-<h1>g+theme(plot.title = element_text(size=20, face=“bold”, vjust=1, lineheight=0.6))</h1>
-</div>
-<div id="gthemelegend.title-element_textcolourchocolate-size16-facebold" class="section level1">
-<h1>g+theme(legend.title = element_text(colour=“chocolate”, size=16, face=“bold”))</h1>
+<div id="question-4" class="section level1">
+<h1>Question 4</h1>
+<p>Plot the GDP for all of the countries. Use ggplot2 to color your plot by Income Group. g&lt;-g+ggtitle(“GDP”) g+theme(plot.title = element_text(size=20, face=“bold”, vjust=1, lineheight=0.6)) g+theme(legend.title = element_text(colour=“chocolate”, size=16, face=“bold”))</p>
 <pre class="r"><code>g&lt;-ggplot(GDPEDUdataRank, aes(Ranking, MUSD, color=factor(`Income Group`)))+geom_point()
-g</code></pre>
-<p><img src="data:image/png;base64,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" alt /><!-- --></p>
-<div id="question-5" class="section level2">
-<h2>Question 5</h2>
+g&lt;-g+ggtitle(&quot;GDP in MUSD vs. GDP Ranking&quot;)
+g+theme(plot.title = element_text(size=15, face=&quot;bold&quot;, vjust=1, lineheight=0.6))</code></pre>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
+<pre class="r"><code>g+theme(legend.title = element_text(colour=&quot;chocolate&quot;, size=16, face=&quot;bold&quot;))</code></pre>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
+<pre class="r"><code>g</code></pre>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
 </div>
-</div>
-<div id="cut-the-gdp-ranking-into-5-separate-quantile-groups.-make-a-table-versus-income.group." class="section level1">
-<h1>Cut the GDP ranking into 5 separate quantile groups. Make a table versus Income.Group.</h1>
-</div>
-<div id="how-many-countries-are-lower-middle-income-but-among-the-38-nations-with-highest" class="section level1">
-<h1>How many countries are Lower middle income but among the 38 nations with highest</h1>
-</div>
-<div id="gdp" class="section level1">
-<h1>GDP?</h1>
-<div id="additional-info---exploration" class="section level2">
-<h2>Additional Info - Exploration</h2>
-</div>
-</div>
-<div id="quantilegdpedudatarankmusd" class="section level1">
-<h1>quantile(GDPEDUdataRank$MUSD)</h1>
-</div>
-<div id="brks---withgdpedudatarank-quantilemusd-probs-c0-0.20-0.40-0.60-0.8-1" class="section level1">
-<h1>brks &lt;- with(GDPEDUdataRank, quantile(MUSD, probs = c(0, 0.20, 0.40, 0.60, 0.8, 1)))</h1>
-</div>
-<div id="gdpedudatarankqant---withingdpedudatarank-quantile---cutmusd-breaks-brks-labels-15-include.lowest-true" class="section level1">
-<h1>GDPEDUdataRankQant &lt;- within(GDPEDUdataRank, quantile &lt;- cut(MUSD, breaks = brks, labels = 1:5, include.lowest = TRUE))</h1>
+<div id="question-5" class="section level1">
+<h1>Question 5</h1>
+<p>Cut the GDP ranking into 5 separate quantile groups. Make a table versus Income.Group. How many countries are Lower middle income but among the 38 nations with highest GDP?</p>
+<p>Additional Info - Exploration quantile(GDPEDUdataRank$MUSD) brks &lt;- with(GDPEDUdataRank, quantile(MUSD, probs = c(0, 0.20, 0.40, 0.60, 0.8, 1))) GDPEDUdataRankQant &lt;- within(GDPEDUdataRank, quantile &lt;- cut(MUSD, breaks = brks, labels = 1:5, include.lowest = TRUE))</p>
 <pre class="r"><code>brks2 &lt;- with(GDPEDUdataRank, quantile(Ranking, probs = c(0, 0.20, 0.40, 0.60, 0.8, 1)))
-GDPEDUdataRankQantRnk &lt;- within(GDPEDUdataRank, quantile &lt;- cut(Ranking, breaks = brks2, labels = 1:5, include.lowest = TRUE))</code></pre>
+GDPEDUdataRankQantRnk &lt;- within(GDPEDUdataRank, quantile &lt;- cut(Ranking, breaks = brks2, labels = 1:5, include.lowest = TRUE))
+LowerMiddleIncome &lt;- subset(GDPEDUdataRankQantRnk, `Income Group` == &quot;Lower middle income&quot;) #create subset for Lower Middle Income
+LowerMiddleIncomeTop38GDP &lt;- subset(LowerMiddleIncome, Ranking &lt;= 38) #create additional subset with top 38 GDPs
+LowerMiddleIncomeTop38GDP[c(1:2)] #list of GDPs with both that are both in the lower Middle income group and in top 38 GDPs</code></pre>
+<pre><code>##     CountryCode Ranking
+## 153         EGY      38
+## 160         THA      31
+## 175         IDN      16
+## 181         IND      10
+## 189         CHN       2</code></pre>
 </div>
 <div id="table" class="section level1">
 <h1>Table</h1>
@@ -971,33 +551,8 @@ GDPEDUdataRankQantRnk &lt;- within(GDPEDUdataRank, quantile &lt;- cut(Ranking, b
 ##   4                      8                   8    1
 ##   5                     16                   9    0
 ##   &lt;NA&gt;                   0                   0    0</code></pre>
-</div>
-<div id="separating-out-the-lower-middle-income-group-for-comparison-to-ranking-of-top-38-gdp-countries" class="section level1">
-<h1>Separating out the Lower middle income group for comparison to ranking of Top 38 GDP Countries</h1>
-</div>
-<div id="was-not-able-to-get-rmarkdown-to-process-the-code-below-code-produces-list-of-five-countries-below." class="section level1">
-<h1>was not able to get Rmarkdown to process the code below: code produces list of five countries below.</h1>
-</div>
-<div id="r-lowermiddleincome---subsetgdpedudatarankqant-income-group-lower-middle-income-create-subset-for-lower-middle-income-lowermiddleincometop38gdp---subsetlowermiddleincome-ranking-38-create-additional-subset-with-top-38-gdps-lowermiddleincometop38gdpc12-list-of-gdps-with-both-that-are-both-in-the-lower-middle-income-group-and-in-top-38-gdps" class="section level1">
-<h1><code>{r} #LowerMiddleIncome &lt;- subset(GDPEDUdataRankQant, `Income Group` == &quot;Lower middle income&quot;) #create subset for Lower Middle Income #LowerMiddleIncomeTop38GDP &lt;- subset(LowerMiddleIncome, Ranking &lt;= 38) #create additional subset with top 38 GDPs #LowerMiddleIncomeTop38GDP[c(1:2)] #list of GDPs with both that are both in the lower Middle income group and in top 38 GDPs #</code></h1>
-</div>
-<div id="five-countries-are-in-the-lower-middle-income-group-that-are-in-the-top-38-gdp." class="section level1">
-<h1>Five countries are in the lower middle income group that are in the top 38 GDP.</h1>
-</div>
-<div id="chn-2" class="section level1">
-<h1>CHN (2)</h1>
-</div>
-<div id="ind-10" class="section level1">
-<h1>IND (10)</h1>
-</div>
-<div id="idn-16" class="section level1">
-<h1>IDN (16)</h1>
-</div>
-<div id="tha-31" class="section level1">
-<h1>THA (31)</h1>
-</div>
-<div id="egy-38" class="section level1">
-<h1>EGY (38)</h1>
+<p>Separating out the Lower middle income group for comparison to ranking of Top 38 GDP Countries was not able to get Rmarkdown to process the code below: code produces list of five countries below.</p>
+<p>Five countries are in the lower middle income group that are in the top 38 GDP. CHN (2) IND (10) IDN (16) THA (31) EGY (38)</p>
 </div>
 
 
