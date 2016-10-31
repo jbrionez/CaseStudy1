@@ -124,12 +124,21 @@ $(document).ready(function () {
 </div>
 
 
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The World Bank Group has set two goals for the world to achieve by 2030:</p>
+<p>End extreme poverty by decreasing the percentage of people living on less than $1.90 a day to no more than 3%</p>
+<p>Promote shared prosperity by fostering the income growth of the bottom 40% for every country</p>
+<p>The World Bank is a vital source of financial and technical assistance to developing countries around the world. The World Bank Group comprises five institutions managed by their member countries. Established in 1944, the World Bank Group is headquartered in Washington, D.C. We have more than 10,000 employees in more than 120 offices worldwide.</p>
+<p>The World Bank also provides free and open access to global development data that it collects on their website at data.worldbank.org. This analysis will utilize this data to provide insight into countries of various GDP levels and the income levels of the people who live in those countries.</p>
+<p>We are utilizing the following queried data sets in our analysis: Education Statistics - The World Bank EdStats All Indicator Query GDP Ranking - Gross domestic product ranking table</p>
 <div id="installed-packages" class="section level2">
 <h2>Installed Packages</h2>
 <pre class="r"><code>library(ggplot2)
 library(repmis)
 library(RCurl)</code></pre>
 <pre><code>## Loading required package: bitops</code></pre>
+</div>
 </div>
 <div id="downloading-url-and-clean-up-prep-for-merge" class="section level1">
 <h1>Downloading URL and clean up prep for Merge</h1>
@@ -965,6 +974,9 @@ GDPEDUdataRankQantRnk &lt;- within(GDPEDUdataRank, quantile &lt;- cut(Ranking, b
 </div>
 <div id="separating-out-the-lower-middle-income-group-for-comparison-to-ranking-of-top-38-gdp-countries" class="section level1">
 <h1>Separating out the Lower middle income group for comparison to ranking of Top 38 GDP Countries</h1>
+</div>
+<div id="was-not-able-to-get-rmarkdown-to-process-the-code-below-code-produces-list-of-five-countries-below." class="section level1">
+<h1>was not able to get Rmarkdown to process the code below: code produces list of five countries below.</h1>
 </div>
 <div id="r-lowermiddleincome---subsetgdpedudatarankqant-income-group-lower-middle-income-create-subset-for-lower-middle-income-lowermiddleincometop38gdp---subsetlowermiddleincome-ranking-38-create-additional-subset-with-top-38-gdps-lowermiddleincometop38gdpc12-list-of-gdps-with-both-that-are-both-in-the-lower-middle-income-group-and-in-top-38-gdps" class="section level1">
 <h1><code>{r} #LowerMiddleIncome &lt;- subset(GDPEDUdataRankQant, `Income Group` == &quot;Lower middle income&quot;) #create subset for Lower Middle Income #LowerMiddleIncomeTop38GDP &lt;- subset(LowerMiddleIncome, Ranking &lt;= 38) #create additional subset with top 38 GDPs #LowerMiddleIncomeTop38GDP[c(1:2)] #list of GDPs with both that are both in the lower Middle income group and in top 38 GDPs #</code></h1>

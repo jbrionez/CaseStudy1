@@ -1,6 +1,26 @@
 # CaseStudy1
 Jacob Brionez  
 October 27, 2016  
+#Introduction
+
+The World Bank Group has set two goals for the world to achieve by 2030:
+
+End extreme poverty by decreasing the percentage of people living on less than $1.90 a day to no more than 3%
+
+Promote shared prosperity by fostering the income growth of the bottom 40% for every country
+
+The World Bank is a vital source of financial and technical assistance to developing countries around the world. The World Bank Group comprises five institutions managed by their member countries.
+Established in 1944, the World Bank Group is headquartered in Washington, D.C. We have more than 10,000 employees
+in more than 120 offices worldwide.
+
+The World Bank also provides free and open access to global development data that it collects on their website
+at data.worldbank.org.  This analysis will utilize this data to provide insight into countries of various GDP
+levels and the income levels of the people who live in those countries.  
+
+We are utilizing the following queried data sets in our analysis:
+Education Statistics - The World Bank EdStats All Indicator Query
+GDP Ranking - Gross domestic product ranking table
+
 
 ##Installed Packages
 
@@ -870,6 +890,7 @@ table(GDPEDUdataRankQantRnk$quantile, GDPEDUdataRankQantRnk$`Income Group`, excl
 ```
 
 #Separating out the Lower middle income group for comparison to ranking of Top 38 GDP Countries
+#was not able to get Rmarkdown to process the code below: code produces list of five countries below.
 #```{r}
 #LowerMiddleIncome <- subset(GDPEDUdataRankQant, `Income Group` == "Lower middle income") #create subset for Lower Middle Income
 #LowerMiddleIncomeTop38GDP <- subset(LowerMiddleIncome, Ranking <= 38) #create additional subset with top 38 GDPs
